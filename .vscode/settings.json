@@ -1,0 +1,15 @@
+{
+    "jshint.enable": false,
+    "sqltools.connections": [
+        {
+            "connectionTimeout": 30,
+            "database": "test",
+            "dialect": "MySQL",
+            "name": "test",
+            "password": "www",
+            "port": 3306,
+            "server": "127.0.0.1",
+            "username": "www"
+        }
+    ]
+}

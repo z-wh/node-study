@@ -7,7 +7,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const PurifycssPlugin = require('purifycss-webpack');
 
 const website = {
-  publicPath: 'http://localhost:1999/'
+  publicPath: 'http://localhost:1999/',
 };
 
 module.exports = {
@@ -29,9 +29,9 @@ module.exports = {
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            'css-loader'
-          ]
-        })
+            'css-loader',
+          ],
+        }),
       },
       {
         test: /\.scss$/,
@@ -40,10 +40,10 @@ module.exports = {
           use: [
             'css-loader',
             'postcss-loader',
-            'sass-loader'
+            'sass-loader',
           ],
-          publicPath: '../'
-        })
+          publicPath: '../',
+        }),
       },
       {
         test: /\.(png|jpe?g|gif)/,
@@ -63,18 +63,18 @@ module.exports = {
         ],
         exclude: '/node_modules',
       },
-    ]
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'webpack demo',
       hash: true,
-      template: path.resolve(__dirname, 'src/index.html')
+      template: path.resolve(__dirname, 'src/index.html'),
     }),
     new CleanWebpackPlugin(),
     new ExtractTextPlugin('css/common.css'),
     new PurifycssPlugin({
-      paths: glob.sync(path.resolve(__dirname, 'src/*.html'))
+      paths: glob.sync(path.resolve(__dirname, 'src/*.html')),
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',

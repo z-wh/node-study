@@ -17,24 +17,14 @@ class ListenForm {
   constructor(elements, options) {
     const eles = document.querySelectorAll(elements);
     console.log(eles);
-    eles.forEach((value) => {
-      const name = value.querySelector('[name="name"]').value;
-      const phone = value.querySelector('[name="phone"]').value;
-      const email = value.querySelector('[name="email"]').value || '';
-      const course = value.querySelector('[name="course"]').value || '';
-      const city = value.querySelector('[name="city"]').value || '';
-      console.log('-----------value-----------------');
-      console.log(value);
-      console.log(`name:${name},phone:${phone}, email:${email}`);
-      const opts = {
-        ...this.#defaults, ...options, name, phone, email, course, city,
-      };
-      const submitTarget = value.querySelector(opts.submitTarget);
-      console.log(submitTarget);
-      this.submitClick(submitTarget, opts);
+    eles.forEach((ele) => {
+      this.opts = { ...this.#defaults, ...options };
+      this.submitClick(ele);
+    console.log('-----------value-----------------');
+    console.log(ele);
       console.log('-----------opts-----------------');
-      console.log(opts);
-      console.log(`是否需邮箱：${opts.emailRequired}`);
+      console.log(this.opts);
+      console.log(`是否需邮箱：${this.opts.emailRequired}`);
     });
   }
 
@@ -43,7 +33,7 @@ class ListenForm {
     if (unames == null || unames === '') {
       return '';
     }
-    let arr = {};
+    const arr = {};
     let rtn = '';
     arr[0] = unames.charAt(0);
     rtn = arr[0].charCodeAt();
@@ -90,8 +80,9 @@ class ListenForm {
     return true;
   }
 
-  getListenName(opts) {
-    const values = opts.contentName;
+  // eslint-disable-next-line class-methods-use-this
+  getListenName() {
+    const values = this.opts.contentName;
     let contentName = '';
 
     if (typeof values === 'string') {
@@ -108,17 +99,17 @@ class ListenForm {
     return contentName;
   }
 
-  validateLinsten(opts) {
+  validateLinsten(ele) {
     let flag = false;
-    // const formTarget = this.ele;
     const {
-      siteId, emailRequired, courseRequired, cityRequired, isMsg, smsInfo, name, phone, email, course, city,
-    } = opts;
-    // const name = $(formTarget).find("[name='name']").val();
-    // const phone = $(formTarget).find("[name='phone']").val();
-    // const email = $(formTarget).find("[name='email']").val() || '';
-    // const course = $(formTarget).find("[name='course']").val() || '';
-    // const city = $(formTarget).find("[name='city']").val() || '';
+      siteId, emailRequired, courseRequired, cityRequired, isMsg, smsInfo,
+    } = this.opts;
+    const name = ele.querySelector('[name="name"]').value;
+    const phone = ele.querySelector('[name="phone"]').value;
+    const email = ele.querySelector('[name="email"]') ? ele.querySelector('[name="email"]').value : '';
+    const course = ele.querySelector('[name="course"]') ? ele.querySelector('[name="course"]').value : '';
+    const city = ele.querySelector('[name="city"]') ? ele.querySelector('[name="city"]').value : '';
+    console.log(`name:${name},phone:${phone}, email:${email}`);
     flag = this.required(name, '请输入姓名') && this.validateName(name) && this.required(phone, '请输入手机号码') && this.validatePhone(phone) && this.validateEmail(email);
     if (emailRequired) {
       flag = flag && this.required(email, '请输入邮箱地址');
@@ -130,7 +121,7 @@ class ListenForm {
       flag = flag && this.required(city, '请输入您所在的城市');
     }
 
-    const contentName = this.getListenName(opts);
+    const contentName = this.getListenName();
 
     let params = {
       siteId,
@@ -156,13 +147,13 @@ class ListenForm {
     console.log(params);
 
     if (flag) {
-      this.submitLinsten(opts, params);
+      this.submitLinsten(params);
     }
   }
 
-  submitLinsten(opts, params) {
+  submitLinsten(params) {
     const self = this;
-    const { successFun } = opts;
+    const { successFun } = this.opts;
     $.ajax({
       type: 'GET',
       url: 'http://localhost:1999/newListen.jspx',
@@ -192,16 +183,16 @@ class ListenForm {
     });
   }
 
-  submitClick(submitTarget, opts) {
+  submitClick(ele) {
     const self = this;
-    const { delay } = opts;
+    const { submitTarget, delay } = this.opts;
     let lastTime = 0;
     // eslint-disable-next-line func-names
-    $(submitTarget).on('click', function () {
+    $(ele.querySelector(submitTarget)).on('click', function () {
       const nowTime = new Date().getTime();
       if (nowTime - lastTime > delay) {
         lastTime = nowTime;
-        self.validateLinsten(opts);
+        self.validateLinsten(ele);
       }
       console.log(`点中了:${this.innerHTML}`);
     });

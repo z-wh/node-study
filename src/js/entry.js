@@ -1,6 +1,6 @@
 import '../css/style.css';
 import '../scss/main.scss';
-import ListenForm from './module/listenForm';
+import ListenForm from './module/ListenForm';
 
 const div = document.createElement('div');
 div.innerHTML = 'hahaha^_^!';

@@ -1,3 +1,5 @@
+import CreateDom from './CreateDom';
+
 /* eslint-disable no-console */
 class ListenForm {
   #defaults = {
@@ -15,6 +17,7 @@ class ListenForm {
   };
 
   constructor(elements, options) {
+    CreateDom.addStyleByLink('http://webms1.xhd.cn/r/cms/static/listen/listen.css');
     const eles = document.querySelectorAll(elements);
     console.log(eles);
     eles.forEach((ele) => {
@@ -214,6 +217,22 @@ class ListenForm {
     setTimeout(() => {
       $('#popTips').remove();
     }, 1500);
+  }
+
+  static msgTips(message, status, delay) {
+    const delayTime = (delay || 2000) + 500;
+    let hm = '';
+    hm = status === 'success' ? `<div id="msgTips" class="success">${message}</div>` : `<div id="msgTips">${message}</div>`;
+    $('body').append(hm);
+    setTimeout(() => {
+      $('#msgTips').addClass('fade-in');
+    }, 0);
+    setTimeout(() => {
+      $('#msgTips').removeClass('fade-in');
+    }, delayTime);
+    setTimeout(() => {
+      $('#msgTips').remove();
+    }, delayTime);
   }
 }
 

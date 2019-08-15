@@ -19,8 +19,7 @@ let listenForm = new ListenForm('.form-1', {
   isMsg: true,
   smsInfo: '【新航道】您已预约成功，我们将在1个工作日内与您取得联系，谢谢！',
   successFun() {
-    console.log('---------------hahahaha---------');
-    console.log(this);
+    alert('您已预约成功，我们将在1个工作日内与您取得联系，谢谢！');
   },
 });
 

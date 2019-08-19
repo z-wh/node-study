@@ -18,9 +18,9 @@ let listenForm = new ListenForm('.form-1', {
   submitTarget: '.btn-submit1',
   isMsg: true,
   smsInfo: '【新航道】您已预约成功，我们将在1个工作日内与您取得联系，谢谢！',
-  successFun() {
-    alert('您已预约成功，我们将在1个工作日内与您取得联系，谢谢！');
-  },
+  // successFun() {
+  //   alert('您已预约成功，我们将在1个工作日内与您取得联系，谢谢！');
+  // },
 });
 
 for (let i = 0; i < 200; i++) {

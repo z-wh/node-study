@@ -152,6 +152,16 @@ class ListenForm {
     }
   }
 
+  static successFun(resp) {
+    if (resp.success) {
+      ListenForm.msgTips('恭喜您预约成功！', 'success', 3000);
+    } else if (resp.status === 3) {
+      ListenForm.msgTips('您已经预约，我们会尽快与您取得联系！');
+    } else {
+      ListenForm.msgTips('预约提交失败，请重试！');
+    }
+  }
+
   submitLinsten(params) {
     const { successFun } = this.opts;
     $.ajax({
@@ -160,25 +170,18 @@ class ListenForm {
       data: params,
       dataType: 'jsonp',
       jsonp: 'callbak',
-      success(res) {
-        console.log(res);
-        if (res.success) {
-          if (successFun && typeof successFun === 'function') {
-            successFun();
-          } else {
-            ListenForm.popTips(res);
-          }
-          // ListenForm.popTips('恭喜您预约成功！');
-        } else if (res.status === 3) {
-          ListenForm.popTips('您已经预约，我们会尽快与您取得联系！');
+      success(resp) {
+        console.log(resp);
+        if (successFun && typeof successFun === 'function') {
+          successFun();
         } else {
-          ListenForm.popTips('预约提交失败，请重试！');
+          ListenForm.successFun(resp);
         }
       },
       error(err) {
         console.log('-----err-----');
         console.log(err);
-        ListenForm.popTips('服务器异常');
+        ListenForm.msgTips('服务器异常');
       },
     });
   }

@@ -17,6 +17,8 @@
     <div id="react-container6"></div>
     <div id="react-container7"></div>
     <div id="react-container8"></div>
+    <div id="react-container9"></div>
+    <div id="react-container10"></div>
     <script crossorigin src="js/react.js"></script>
     <script crossorigin src="js/react-dom.js"></script>
     <script src="http://cdn.bootcss.com/babel-core/5.8.38/browser.min.js"></script>
@@ -193,6 +195,76 @@
             <MyComponent/>,
             document.getElementById('react-container8')
         );
+
+        var MyForm = React.createClass({
+            getInitialState: function(){
+                return {
+                    username: '',
+                    gender: 'man',
+                    checked: true
+                }
+            },
+            handleChange: function(name, event) {
+                var newState = {};
+                newState[name] = name === 'checked' ? event.target.checked : event.target.value;
+                this.setState(newState);
+                console.log(newState);
+            },
+            submitHandler: function(e) {
+                e.preventDefault();
+                var is = this.state.checked ? '是' : '不是';
+                var gender = this.state.gender == 'man' ? '帅哥' : '美女';
+                alert(this.state.username + is + gender + '.');
+            },
+            render: function() {
+                return (
+                    <form onSubmit={this.submitHandler}>
+                        <label htmlFor="username">请输入您的姓名：</label>
+                        <input type="text" name="username" onChange={this.handleChange.bind(this,"username")}
+                            value={this.state.username} id="username" />
+                        <br />
+                        <label htmlFor="checkbox">是或否：</label>
+                        <input type="checkbox" value="是否" name="checked" id="checkbox"
+                            onChange={this.handleChange.bind(this,"checked")} checked={this.state.checked} />
+                        <br />
+                        <label htmlFor="username">请选择</label>
+                        <select name="gender" onChange={this.handleChange.bind(this,"gender")} value={this.state.gender}>
+                            <option value="man">帅哥</option>
+                            <option value="woman">美女</option>
+                        </select>
+                        <br />
+                        <button type="submit">提交</button>
+                    </form>
+                )
+            }
+        });
+        ReactDOM.render(
+            <MyForm/>,
+            document.getElementById('react-container9')
+        );
+
+        var MyForm1 = React.createClass({
+            getInitialState: function() {
+                return {
+                    value: 'react awosome'
+                }
+            },
+            handleChange: function(event) {
+                this.setState({
+                    value: event.target.value
+                });
+                console.log(this.state.value);
+            },
+            render: function() {
+                return (
+                    <input type="text" onChange={this.handleChange} value={this.state.value}/>
+                )
+            }
+        });
+        ReactDOM.render(
+            <MyForm1/>,
+            document.getElementById('react-container10')
+        )
     </script>
 </body>
 

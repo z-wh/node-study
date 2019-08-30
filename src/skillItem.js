@@ -7,11 +7,28 @@ class SkillItem extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
+    componentWillReceiveProps() {
+        console.log('child-componentWillReceiveProps---组件接收props');
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.student !== this.props.student) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    componentWillUnmount() {
+        console.log('chilid-组件被删除');
+    }
+
     handleClick() {
         this.props.deleteItem();
     }
 
     render() {
+        console.log('child-render');
         return (
             <li onClick={this.handleClick}>{this.props.student}准备学习{ this.props.content }</li>
         );

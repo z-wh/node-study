@@ -3,6 +3,7 @@ import './style.css';
 import SkillItem from './SkillItem';
 import axios from 'axios';
 import Teacher from './Teacher';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 class Skill extends Component {
     constructor(props) {
@@ -78,20 +79,28 @@ class Skill extends Component {
                 />
                 <button type="button" onClick={this.addList.bind(this)}>学习技能</button>
                 <ul>
-                    {
-                        this.state.list.map((item, index) => {
-                            return (
-                                <SkillItem
-                                    content={item}
-                                    key={item + index}
-                                    deleteItem={this.deleteItem.bind(this, index)}
-                                    index={index}
-                                />
-                            )
-                        })
-                    }
+                    <TransitionGroup>
+                        {
+                            this.state.list.map((item, index) => {
+                                return (
+                                    <CSSTransition
+                                        timeout={1000}
+                                        classNames='fade'
+                                        unmountOnExit
+                                    >
+                                        <SkillItem
+                                            content={item}
+                                            key={item + index}
+                                            deleteItem={this.deleteItem.bind(this, index)}
+                                            index={index}
+                                        />
+                                    </CSSTransition>
+                                )
+                            })
+                        }
+                    </TransitionGroup>
                 </ul>
-                <Teacher/>
+                <Teacher />
             </Fragment>
         );
     }

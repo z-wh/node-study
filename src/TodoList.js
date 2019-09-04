@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import store from './store/index';
-import { inputChangeAction, addItemAction, deleteItemAction, getTodoList } from './store/actionCreators';
+import { inputChangeAction, addItemAction, deleteItemAction, getListByThunk, getListBySaga } from './store/actionCreators';
 import TodoListUI from './TodoListUI';
 
 class TodoList extends Component {
@@ -39,7 +39,8 @@ class TodoList extends Component {
     }
 
     componentDidMount() {
-        const action = getTodoList();
+        // const action = getListByThunk();
+        const action = getListBySaga();
         store.dispatch(action);
     }
 

@@ -1,4 +1,4 @@
-import { INPUT_CHANGE, ADD_ITEM, DELETE_ITEM, GET_LIST } from './actionTypes';
+import { INPUT_CHANGE, ADD_ITEM, DELETE_ITEM, GET_LIST, GET_LIST_BY_SAGA } from './actionTypes';
 import axios from 'axios';
 
 export const inputChangeAction = (value) => ({
@@ -18,9 +18,9 @@ export const deleteItemAction = (index) => ({
 export const getListAction = (data) => ({
     type: GET_LIST,
     data,
-})
+});
 
-export const getTodoList = () => {
+export const getListByThunk = () => {
     return (dispatch) => {
         axios.post(
             'https://www.easy-mock.com/mock/5d68e07d0c885f74263b5035/react16-demo/upload'
@@ -31,4 +31,8 @@ export const getTodoList = () => {
             dispatch(action);
         })
     }
-}
+};
+
+export const getListBySaga = () => ({
+    type: GET_LIST_BY_SAGA,
+})

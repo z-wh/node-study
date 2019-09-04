@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import store from './store/index';
-import { inputChangeAction, addItemAction, deleteItemAction, getListAction } from './store/actionCreators';
+import { inputChangeAction, addItemAction, deleteItemAction, getTodoList } from './store/actionCreators';
 import TodoListUI from './TodoListUI';
-import axios from 'axios';
 
 class TodoList extends Component {
 
@@ -40,24 +39,18 @@ class TodoList extends Component {
     }
 
     componentDidMount() {
-        axios.post(
-            'https://www.easy-mock.com/mock/5d68e07d0c885f74263b5035/react16-demo/upload'
-        ).then((resp) => {
-            console.log(resp);
-            let data = resp.data;
-            const action = getListAction(data);
-            store.dispatch(action);
-        });
+        const action = getTodoList();
+        store.dispatch(action);
     }
 
     render() {
         return (
             <TodoListUI
-                inputValue = {this.state.inputValue}
-                list = {this.state.list}
-                inputChange = {this.inputChange}
-                addItem = {this.addItem}
-                deleteItem = {this.deleteItem}
+                inputValue={this.state.inputValue}
+                list={this.state.list}
+                inputChange={this.inputChange}
+                addItem={this.addItem}
+                deleteItem={this.deleteItem}
             />
         );
     }

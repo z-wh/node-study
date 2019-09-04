@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import store from './store/index';
-import { inputChangeAction, addItemAction, deleteItemAction, getListByThunk, getListBySaga } from './store/actionCreators';
+import { inputChangeAction, addItemAction, deleteItemAction, /*getListByThunk, */getListBySaga } from './store/actionCreators';
 import TodoListUI from './TodoListUI';
 
 class TodoList extends Component {
